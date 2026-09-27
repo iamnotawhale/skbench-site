@@ -124,27 +124,28 @@ body {
   font-weight: 700;
   font-size: clamp(3.4rem, 11vw, 6.5rem);
   letter-spacing: -0.045em;
-  line-height: 0.95;
+  line-height: 1;
   color: var(--prompt-sym);
 }
 
 .prompt-host {
+  display: block;
   color: var(--prompt);
   line-height: 1;
+  /* Space Grotesk has a deep descent box; pull ink metrics to the flex mid-line */
+  transform: translateY(0.04em);
 }
 
 .caret {
-  display: inline-block;
+  display: block;
   flex: 0 0 auto;
-  align-self: center;
   width: 0.28em;
-  height: 0.72em;
+  height: 0.62em;
   margin: 0;
   box-sizing: border-box;
   border: none;
   border-radius: 2px;
   background: #ffffff;
-  transform: none;
   animation: caret 1.5s steps(1, end) infinite;
 }
 
