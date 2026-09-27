@@ -122,14 +122,15 @@ body {
 
 .caret {
   display: inline-block;
-  width: 0.09em;
-  height: 0.78em;
-  margin-left: 0.06em;
-  vertical-align: -0.14em;
+  width: 0.45ch;
+  height: 0.82em;
+  margin-left: 2px;
+  vertical-align: -0.02em;
   border-radius: 1px;
-  background: var(--accent);
-  box-shadow: 0 0 24px rgba(183, 148, 246, 0.55);
-  animation: caret 1.1s steps(1) infinite;
+  background: #3b82f6;
+  box-shadow: 0 0 22px rgba(59, 130, 246, 0.45);
+  transform: translateY(0.02em);
+  animation: caret 1.5s steps(1, end) infinite;
 }
 
 h1 {
@@ -271,7 +272,7 @@ footer {
 
 @keyframes caret {
   0%,
-  46% {
+  49% {
     opacity: 1;
   }
   50%,
