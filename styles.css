@@ -114,7 +114,7 @@ body {
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: nowrap;
   white-space: nowrap;
   margin: 0;
@@ -122,17 +122,13 @@ body {
   font-weight: 700;
   font-size: clamp(2.4rem, 7vw, 4.25rem);
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1;
   color: var(--prompt-sym);
 }
 
-.prompt-host,
-.prompt-path {
+.prompt-host {
   color: var(--prompt);
-}
-
-.prompt-sym {
-  color: var(--prompt-sym);
+  line-height: 1;
 }
 
 .prompt-sp {
@@ -142,15 +138,15 @@ body {
 .caret {
   display: inline-block;
   flex: 0 0 auto;
+  align-self: center;
   width: 0.55ch;
-  height: 1em;
+  height: 0.92em;
   margin: 0;
   box-sizing: border-box;
   border: none;
   border-radius: 1px;
   background: #ffffff;
-  vertical-align: text-bottom;
-  transform: translateY(0.06em);
+  transform: none;
   animation: caret 1.5s steps(1, end) infinite;
 }
 
