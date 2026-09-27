@@ -124,11 +124,11 @@ body {
   display: inline-block;
   width: 0.45ch;
   height: 0.82em;
-  margin-left: 2px;
+  margin-left: 0;
   vertical-align: -0.02em;
   border-radius: 1px;
-  background: #3b82f6;
-  box-shadow: 0 0 22px rgba(59, 130, 246, 0.45);
+  background: #ffffff;
+  box-shadow: none;
   transform: translateY(0.02em);
   animation: caret 1.5s steps(1, end) infinite;
 }
