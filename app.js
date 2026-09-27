@@ -12,12 +12,12 @@ async function loadLatest() {
     const res = await fetch(RELEASES, {
       headers: { Accept: "application/vnd.github+json" },
     });
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(String(res.status));
     const data = await res.json();
     const tag = (data.tag_name || "").replace(/^v/, "");
-    if (tag && versionEl) versionEl.textContent = tag;
+    if (tag && versionEl) versionEl.textContent = `v${tag}`;
   } catch {
-    /* keep "latest" */
+    if (versionEl) versionEl.textContent = "latest";
   }
 }
 
