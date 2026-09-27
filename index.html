@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>skterm — Linux SSH workbench</title>
+    <meta
+      name="description"
+      content="skterm is a Linux SSH client with hosts, split panes, SFTP, encrypted catalog, and optional cloud sync. Download the latest .deb."
+    />
+    <meta name="theme-color" content="#0c0f14" />
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <main class="hero">
+      <div class="hero-copy">
+        <p class="brand">
+          <img class="brand-mark" src="assets/mark.svg" width="36" height="36" alt="" />
+          skterm<span class="caret" aria-hidden="true"></span>
+        </p>
+        <h1>SSH workbench for Linux</h1>
+        <p class="lede">
+          Hosts, groups, credentials, local shell, split panes, SFTP, jump hosts, and an
+          encrypted catalog — with optional end-to-end cloud sync.
+        </p>
+        <div class="cta">
+          <a
+            id="download"
+            class="btn-primary"
+            href="https://github.com/iamnotawhale/skterm-site/releases/latest/download/skterm_amd64.deb"
+          >
+            Download .deb
+            <span id="version" class="ver">latest</span>
+          </a>
+          <p class="hint">
+            amd64 ·
+            <code>sudo apt install ./skterm_amd64.deb</code>
+          </p>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="panel">
+          <div class="panel-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <pre class="panel-body"><span class="dim">$</span> skterm
+<span class="ok">✓</span> catalog unlocked
+<span class="dim">→</span> root@edge-01 <span class="muted">session</span>
+<span class="prompt">&gt;</span><span class="blink">_</span></pre>
+          <img class="panel-mark" src="assets/mark.svg" alt="" />
+        </div>
+      </div>
+    </main>
+    <footer>
+      <span>Linux · Debian / Ubuntu</span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>Source stays private — this page only hosts installers</span>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>
