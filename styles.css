@@ -9,7 +9,9 @@
   --surface: rgba(244, 241, 234, 0.04);
   --font-display: "Sora", "Segoe UI", sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", sans-serif;
-  --font-mono: "Fragment Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --prompt: #c4b5fd;
+  --prompt-sym: #f0e9ff;
 }
 
 *,
@@ -111,25 +113,44 @@ body {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(4.2rem, 12vw, 7.5rem);
-  letter-spacing: -0.055em;
-  line-height: 0.92;
-  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 5.5vw, 3.4rem);
+  letter-spacing: 0;
+  line-height: 1.15;
+  color: var(--prompt-sym);
+}
+
+.prompt-host,
+.prompt-path {
+  color: var(--prompt);
+}
+
+.prompt-sym {
+  color: var(--prompt-sym);
+}
+
+.prompt-sp {
+  white-space: pre;
 }
 
 .caret {
   display: inline-block;
-  width: 0.45ch;
-  height: 0.82em;
-  margin-left: 0;
-  vertical-align: -0.02em;
+  flex: 0 0 auto;
+  width: 0.72ch;
+  height: 1.05em;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1.5px solid var(--prompt-sym);
   border-radius: 1px;
-  background: #ffffff;
-  box-shadow: none;
-  transform: translateY(0.02em);
+  background: transparent;
+  vertical-align: text-bottom;
+  transform: translateY(0.08em);
   animation: caret 1.5s steps(1, end) infinite;
 }
 
@@ -321,7 +342,7 @@ footer {
   }
 
   .brand {
-    font-size: clamp(3.6rem, 18vw, 5.5rem);
+    font-size: clamp(1.55rem, 7.5vw, 2.4rem);
   }
 
   .watermark {
