@@ -8,6 +8,7 @@
   --accent-deep: #6d1fe0;
   --surface: rgba(244, 241, 234, 0.04);
   --font-display: "Sora", "Segoe UI", sans-serif;
+  --font-brand: "Space Grotesk", "Sora", "Segoe UI", sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
   --prompt: #c4b5fd;
@@ -116,13 +117,14 @@ body {
   display: inline-flex;
   align-items: center;
   flex-wrap: nowrap;
+  gap: 0.18em;
   white-space: nowrap;
   margin: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-brand);
   font-weight: 700;
-  font-size: clamp(2.4rem, 7vw, 4.25rem);
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-size: clamp(3.4rem, 11vw, 6.5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
   color: var(--prompt-sym);
 }
 
@@ -131,20 +133,16 @@ body {
   line-height: 1;
 }
 
-.prompt-sp {
-  white-space: pre;
-}
-
 .caret {
   display: inline-block;
   flex: 0 0 auto;
   align-self: center;
-  width: 0.55ch;
-  height: 0.92em;
+  width: 0.28em;
+  height: 0.72em;
   margin: 0;
   box-sizing: border-box;
   border: none;
-  border-radius: 1px;
+  border-radius: 2px;
   background: #ffffff;
   transform: none;
   animation: caret 1.5s steps(1, end) infinite;
@@ -338,7 +336,8 @@ footer {
   }
 
   .brand {
-    font-size: clamp(1.9rem, 9vw, 3rem);
+    font-size: clamp(2.75rem, 14vw, 4.5rem);
+    gap: 0.14em;
   }
 
   .watermark {
