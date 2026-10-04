@@ -1,6 +1,6 @@
-const RELEASES = "https://api.github.com/repos/iamnotawhale/skbench-site/releases/latest";
+const RELEASES = "https://api.github.com/repos/iamnotawhale/skhub-site/releases/latest";
 const DOWNLOAD =
-  "https://github.com/iamnotawhale/skbench-site/releases/latest/download/skbench_amd64.deb";
+  "https://github.com/iamnotawhale/skhub-site/releases/latest/download/skhub_amd64.deb";
 
 const versionEl = document.getElementById("version");
 const downloadEl = document.getElementById("download");
