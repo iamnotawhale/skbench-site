@@ -25,6 +25,32 @@
       <div class="grain"></div>
     </div>
 
+    <aside class="demo" aria-hidden="true">
+      <section class="demo-view" data-view="terminal">
+        <header class="demo-bar"><i></i><i></i><i></i><span>web-1 · ssh</span></header>
+        <div class="demo-body term"></div>
+      </section>
+      <section class="demo-view" data-view="api">
+        <header class="demo-bar"><i></i><i></i><i></i><span>API client</span></header>
+        <div class="demo-body api">
+          <div class="api-url"><b class="api-method">POST</b><span class="api-path"></span><em class="api-send">Send</em></div>
+          <pre class="api-req"></pre>
+          <div class="api-status"></div>
+          <pre class="api-res"></pre>
+        </div>
+      </section>
+      <section class="demo-view" data-view="json">
+        <header class="demo-bar"><i></i><i></i><i></i><span>JSON and XML · Compare</span></header>
+        <div class="demo-body cmp">
+          <div class="cmp-panes">
+            <div class="cmp-col"><span class="cmp-title">Left</span><pre class="cmp-pane" data-side="left"></pre></div>
+            <div class="cmp-col"><span class="cmp-title">Right</span><pre class="cmp-pane" data-side="right"></pre></div>
+          </div>
+          <div class="cmp-result"></div>
+        </div>
+      </section>
+    </aside>
+
     <main class="shell">
       <header class="brand-block">
         <p class="brand" aria-label="skhub">
@@ -55,7 +81,7 @@
       </div>
 
       <section class="pillars" aria-label="What is inside">
-        <article class="pillar">
+        <article class="pillar" tabindex="0" data-demo="terminal">
           <h2>Terminal and SSH</h2>
           <ul>
             <li>Hosts, groups and credentials in an encrypted catalog</li>
@@ -64,7 +90,7 @@
             <li>Optional end-to-end encrypted sync between machines</li>
           </ul>
         </article>
-        <article class="pillar">
+        <article class="pillar" tabindex="0" data-demo="api">
           <h2>API client</h2>
           <ul>
             <li>REST and GraphQL requests, multipart uploads, OAuth 2.0</li>
@@ -74,7 +100,7 @@
             <li>Import from Bruno, Postman and OpenAPI, export to Bruno files</li>
           </ul>
         </article>
-        <article class="pillar">
+        <article class="pillar" tabindex="0" data-demo="json">
           <h2>JSON and XML</h2>
           <ul>
             <li>Beautify, minify and sort keys, with the exact line and column of a syntax error</li>
