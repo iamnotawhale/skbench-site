@@ -29,24 +29,70 @@
       <section class="demo-view" data-view="terminal">
         <header class="demo-bar"><i></i><i></i><i></i><span>web-1 · ssh</span></header>
         <div class="demo-body term"></div>
+        <div class="demo-body sync">
+          <div class="sync-row">
+            <div class="node" data-node="a">
+              <span class="node-title">Laptop</span>
+              <span class="node-chip">AES-256-GCM</span>
+              <div class="node-body">
+                <span class="node-line">hosts · 12</span>
+                <span class="node-line">snippets · 5</span>
+                <span class="node-line fresh">+ web-2</span>
+              </div>
+            </div>
+            <div class="wire" data-wire="a"><i></i></div>
+            <div class="node server">
+              <span class="node-title">Sync server</span>
+              <div class="node-body cipher">
+                <span class="node-line">a9f3 7c01 e2b8</span>
+                <span class="node-line">4d9a c05e 71f6</span>
+                <span class="node-line">b2e8 90ad 3c47</span>
+              </div>
+            </div>
+            <div class="wire" data-wire="b"><i></i></div>
+            <div class="node" data-node="b">
+              <span class="node-title">Desk PC</span>
+              <div class="node-body">
+                <span class="node-line">hosts · 13</span>
+                <span class="node-line">snippets · 5</span>
+                <span class="node-line fresh">+ web-2</span>
+              </div>
+            </div>
+          </div>
+          <p class="sync-note"></p>
+        </div>
       </section>
       <section class="demo-view" data-view="api">
         <header class="demo-bar"><i></i><i></i><i></i><span>API client</span></header>
         <div class="demo-body api">
-          <div class="api-url"><b class="api-method">POST</b><span class="api-path"></span><em class="api-send">Send</em></div>
-          <pre class="api-req"></pre>
-          <div class="api-status"></div>
-          <pre class="api-res"></pre>
+          <div class="api-pick">
+            <div class="tree-head"><span>Collections</span><i class="tree-plus">+</i></div>
+            <div class="tree-view"><div class="tree-list"></div></div>
+          </div>
+          <div class="api-editor">
+            <div class="api-tab"><b class="api-method">POST</b><span>Charge card</span></div>
+            <div class="api-url"><b class="api-method">POST</b><span class="api-path"></span><em class="api-send">Send</em></div>
+            <pre class="api-req"></pre>
+            <div class="api-status"></div>
+            <pre class="api-res"></pre>
+          </div>
         </div>
       </section>
       <section class="demo-view" data-view="json">
-        <header class="demo-bar"><i></i><i></i><i></i><span>JSON and XML · Compare</span></header>
-        <div class="demo-body cmp">
-          <div class="cmp-panes">
-            <div class="cmp-col"><span class="cmp-title">Left</span><pre class="cmp-pane" data-side="left"></pre></div>
-            <div class="cmp-col"><span class="cmp-title">Right</span><pre class="cmp-pane" data-side="right"></pre></div>
+        <header class="demo-bar"><i></i><i></i><i></i><span>JSON and XML</span></header>
+        <div class="demo-body dual">
+          <div class="mode-tabs"><span data-tab="format">Format</span><span data-tab="compare">Compare</span></div>
+          <div class="fmt">
+            <div class="fmt-bar"><b class="fmt-badge">XML</b><em class="fmt-btn quiet">Minify</em><em class="fmt-btn" data-btn="beautify">Beautify</em></div>
+            <pre class="fmt-pane"></pre>
           </div>
-          <div class="cmp-result"></div>
+          <div class="cmp">
+            <div class="cmp-panes">
+              <div class="cmp-col"><span class="cmp-title">Left</span><pre class="cmp-pane" data-side="left"></pre></div>
+              <div class="cmp-col"><span class="cmp-title">Right</span><pre class="cmp-pane" data-side="right"></pre></div>
+            </div>
+            <div class="cmp-result"></div>
+          </div>
         </div>
       </section>
     </aside>
