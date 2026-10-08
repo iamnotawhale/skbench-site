@@ -77,6 +77,40 @@ loadLatest();
     termTitle.textContent = scene === "term" ? "web-1 · ssh" : "Encrypted sync";
   }
 
+  async function autocompleteScene(t) {
+    setTermScene("term");
+    term.textContent = "";
+    line('<span class="ps">deploy@web-1:~$</span> systemctl status app');
+    line('<span class="ok">●</span> app.service - Billing API');
+    line('   Active: <span class="ok">active (running)</span> since 10:41');
+    await sleep(600, t);
+    const row = prompt("deploy@web-1:~$");
+    const cmd = row.querySelector(".cmd");
+    const ghost = document.createElement("span");
+    ghost.className = "ghost-sug";
+    ghost.style.cssText = "color:var(--muted);opacity:0.5;";
+    row.appendChild(ghost);
+    for (const ch of "docker") {
+      cmd.textContent += ch;
+      const full = "docker ps -a";
+      ghost.textContent = full.slice(cmd.textContent.length);
+      await sleep(80, t);
+    }
+    await sleep(900, t);
+    // Tab to accept
+    const rest = ghost.textContent;
+    ghost.textContent = "";
+    for (const ch of rest) {
+      cmd.textContent += ch;
+      await sleep(28, t);
+    }
+    cmd.classList.remove("cur");
+    await sleep(500, t);
+    line("CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS");
+    line('<span class="dim">3f8a1  nginx:latest  ...  2 days ago  Up 2 days</span>');
+    await sleep(2200, t);
+  }
+
   async function sessionScene(t) {
     setTermScene("term");
     term.textContent = "";
@@ -159,6 +193,7 @@ loadLatest();
   async function terminalLoop(t) {
     for (;;) {
       await sessionScene(t);
+      await autocompleteScene(t);
       await syncScene(t);
     }
   }
@@ -420,8 +455,91 @@ loadLatest();
     result.classList.add("is-on");
   }
 
-  const loops = { terminal: terminalLoop, api: apiLoop, json: jsonLoop };
-  const stills = { terminal: terminalStill, api: apiStill, json: jsonStill };
+  const aiView = views.ai;
+  const aiTyped = aiView?.querySelector(".ai-typed");
+  const aiGhost = aiView?.querySelector(".ai-ghost");
+  const aiPanel = aiView?.querySelector(".ai-panel");
+  const aiPanelBody = aiView?.querySelector(".ai-panel-body");
+
+  const AI_SCENARIOS = [
+    {
+      typed: "docker logs -f app",
+      ghost: "",
+      explain: "Container logs streaming.\nPress Ctrl+C to stop.",
+    },
+    {
+      typed: "doc",
+      ghost: "ker ps -a",
+      explain: "Lists all containers\n(running and stopped).",
+    },
+    {
+      typed: "git stash",
+      ghost: " pop",
+      explain: "Temporarily shelves\nuncommitted changes.",
+    },
+    {
+      typed: "kubectl get pods -n",
+      ghost: " production",
+      explain: "Lists all pods in the\nproduction namespace.",
+    },
+  ];
+
+  async function aiScene(t) {
+    for (const sc of AI_SCENARIOS) {
+      if (!aiTyped || !aiGhost || !aiPanel || !aiPanelBody) break;
+      aiPanel.classList.remove("is-on");
+      aiTyped.textContent = "";
+      aiGhost.textContent = "";
+      aiPanelBody.textContent = "";
+      await sleep(400, t);
+      for (const ch of sc.typed) {
+        aiTyped.textContent += ch;
+        if (sc.ghost && aiTyped.textContent.length === sc.typed.length - sc.ghost.length + 1) {
+          aiGhost.textContent = sc.ghost;
+        }
+        await sleep(70, t);
+      }
+      if (sc.ghost) {
+        aiGhost.textContent = sc.ghost;
+      }
+      await sleep(800, t);
+      if (sc.ghost) {
+        aiGhost.textContent = "";
+        for (const ch of sc.ghost) {
+          aiTyped.textContent += ch;
+          await sleep(30, t);
+        }
+      }
+      await sleep(500, t);
+      aiPanel.classList.add("is-on");
+      const cursor = document.createElement("span");
+      cursor.className = "ai-cursor";
+      aiPanelBody.appendChild(cursor);
+      for (const ch of sc.explain) {
+        cursor.before(ch === "\n" ? document.createTextNode("\n") : document.createTextNode(ch));
+        await sleep(28, t);
+      }
+      cursor.remove();
+      await sleep(1800, t);
+    }
+  }
+
+  async function aiLoop(t) {
+    for (;;) {
+      await aiScene(t);
+    }
+  }
+
+  function aiStill() {
+    if (!aiTyped || !aiGhost || !aiPanel || !aiPanelBody) return;
+    aiTyped.textContent = "docker ps -a";
+    aiGhost.textContent = "";
+    aiPanel.classList.add("is-on");
+    aiPanelBody.textContent = "Lists all containers\n(running and stopped).";
+  }
+
+  const loops = { terminal: terminalLoop, api: apiLoop, json: jsonLoop, ai: aiLoop };
+  const stills = { terminal: terminalStill, api: apiStill, json: jsonStill, ai: aiStill };
 
   function activate(name) {
     if (active === name) return;

@@ -6,7 +6,7 @@
     <title>skhub — SSH and API workbench for Linux</title>
     <meta
       name="description"
-      content="skhub is a Linux workbench: an SSH client with hosts, split panes, SFTP and optional end-to-end encrypted sync, plus a built-in API client with collections, scripts, OAuth 2.0 and imports from Bruno, Postman and OpenAPI, and a JSON and XML formatter with logical compare. Download the latest .deb."
+      content="skhub is a Linux workbench: SSH client with terminal autocomplete, SFTP and encrypted sync, a full API client with collections, scripts and OAuth 2.0, a JSON and XML formatter with logical compare, and an AI assistant for terminal errors, API body generation and diff explanation. Download the latest .deb."
     />
     <meta name="theme-color" content="#07090d" />
     <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
@@ -78,6 +78,18 @@
           </div>
         </div>
       </section>
+      <section class="demo-view" data-view="ai">
+        <header class="demo-bar"><i></i><i></i><i></i><span>AI assistant</span></header>
+        <div class="demo-body ai-demo">
+          <div class="ai-term">
+            <span class="ln"><span class="ps">deploy@web-1:~$</span> <span class="ai-typed"></span><span class="ai-ghost"></span></span>
+          </div>
+          <div class="ai-panel">
+            <div class="ai-panel-head"><span class="ai-spark">✦</span><span class="ai-panel-title">AI explanation</span></div>
+            <div class="ai-panel-body"></div>
+          </div>
+        </div>
+      </section>
       <section class="demo-view" data-view="json">
         <header class="demo-bar"><i></i><i></i><i></i><span>JSON and XML</span></header>
         <div class="demo-body dual">
@@ -105,7 +117,7 @@
         </p>
         <h1>SSH and API workbench for Linux</h1>
         <p class="lede">
-          Terminals, hosts and SFTP next to a full API client —<br />
+          Terminals, hosts and SFTP next to a full API client and AI assistant —<br />
           one encrypted workspace on your machine,<br />
           with optional end-to-end sync between devices.
         </p>
@@ -132,6 +144,7 @@
           <ul>
             <li>Hosts, groups and credentials in an encrypted catalog</li>
             <li>Split panes, local terminal, quick connect and snippets</li>
+            <li>Command autocomplete with ghost text — Tab or → to accept</li>
             <li>SFTP browser and port forwarding</li>
             <li>Optional end-to-end encrypted sync between machines</li>
           </ul>
@@ -153,6 +166,16 @@
             <li>Compare two documents logically: key order, attribute order and whitespace do not count</li>
             <li>Differences highlighted in both texts and listed with their paths</li>
             <li>Copy a node, a property or its path from a context menu; nothing is written to disk</li>
+          </ul>
+        </article>
+        <article class="pillar" tabindex="0" data-demo="ai">
+          <h2>AI assistant</h2>
+          <ul>
+            <li>Terminal command autocomplete from history and a built-in command set</li>
+            <li>Explain a terminal error: select text, right-click, Explain with AI</li>
+            <li>Generate API request body from a description with one click</li>
+            <li>Explain diff results in the JSON / XML compare view</li>
+            <li>Works with the built-in proxy, OpenAI-compatible APIs or local Ollama</li>
           </ul>
         </article>
       </section>

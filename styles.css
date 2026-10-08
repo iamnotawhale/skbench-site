@@ -263,7 +263,7 @@ h1 {
 
 .pillars {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 0;
 }
@@ -360,23 +360,15 @@ footer {
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1280px) {
   .pillars {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .pillar:nth-child(3) {
-    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 720px) {
   .pillars {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pillar:nth-child(3) {
-    grid-column: auto;
   }
 
   h1 {
@@ -1107,6 +1099,95 @@ footer {
 
 .cmp-result .muted {
   color: var(--muted);
+}
+
+.ai-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.ai-term {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(244, 241, 234, 0.02);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.ai-term .ps {
+  color: var(--accent);
+}
+
+.ai-typed {
+  color: var(--ink);
+}
+
+.ai-ghost {
+  color: var(--muted);
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+
+.ai-panel {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(183, 148, 246, 0.25);
+  border-radius: 8px;
+  background: rgba(183, 148, 246, 0.05);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ai-panel.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.ai-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.ai-spark {
+  opacity: 0.8;
+}
+
+.ai-panel-body {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+}
+
+@keyframes ai-cursor {
+  50% { opacity: 0; }
+}
+
+.ai-cursor {
+  display: inline-block;
+  width: 0.45em;
+  height: 0.9em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  opacity: 0.7;
+  border-radius: 1px;
+  animation: ai-cursor 0.9s steps(1, end) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
