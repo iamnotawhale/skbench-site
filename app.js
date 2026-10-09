@@ -218,8 +218,13 @@ loadLatest();
   const apiStatus = api.querySelector(".api-status");
   const apiRes = api.querySelector(".api-res");
   const apiSend = api.querySelector(".api-send");
+  const apiFilter = api.querySelector(".api-filter");
+  const apiJp = api.querySelector(".api-jp");
+  const apiJpText = api.querySelector(".api-jp-text");
+  const apiJpCount = api.querySelector(".api-jp-count");
   const REQUEST = '{\n  "amount": 4200,\n  "currency": "eur"\n}';
-  const RESPONSE = '{\n  "id": "ch_91ax",\n  "status": "paid"\n}';
+  const RESPONSE = '{\n  "id": "ch_91ax",\n  "status": "paid",\n  "card": { "brand": "visa", "last4": "4242" }\n}';
+  const FILTERED = '[\n  "visa"\n]';
   const STATUS = "<b>201 Created</b><span>142 ms · 96 B</span>";
   const TREE = [
     { group: "Payments API", count: 4, depth: 0 },
@@ -270,6 +275,10 @@ loadLatest();
     apiStatus.classList.remove("is-on");
     apiRes.classList.remove("is-on");
     apiSend.classList.remove("is-press");
+    apiFilter.classList.remove("is-on", "is-press");
+    apiJp.classList.remove("is-on");
+    apiJpText.textContent = "";
+    apiJpCount.textContent = "";
   }
 
   function scrollTree(offset, seconds) {
@@ -319,7 +328,20 @@ loadLatest();
     await sleep(300, t);
     apiRes.textContent = RESPONSE;
     apiRes.classList.add("is-on");
-    await sleep(3200, t);
+    apiFilter.classList.add("is-on");
+    await sleep(1400, t);
+    // JSONPath filter: the corner button opens it over the response.
+    apiFilter.classList.add("is-press");
+    await sleep(240, t);
+    apiFilter.classList.remove("is-press");
+    apiJp.classList.add("is-on");
+    apiJpText.classList.add("cur");
+    await typeInto(apiJpText, "$.card.brand", t, 60);
+    apiJpText.classList.remove("cur");
+    await sleep(300, t);
+    apiRes.textContent = FILTERED;
+    apiJpCount.textContent = "1 match";
+    await sleep(3000, t);
   }
 
   async function apiLoop(t) {
@@ -455,6 +477,177 @@ loadLatest();
     result.classList.add("is-on");
   }
 
+  const db = views.db;
+  const dbTree = db.querySelector(".db-tree");
+  const dbSql = db.querySelector(".db-sql");
+  const dbComplete = db.querySelector(".db-complete");
+  const dbRun = db.querySelector(".db-run");
+  const dbWait = db.querySelector(".db-wait");
+  const dbWaitText = db.querySelector(".db-wait-text");
+  const dbRes = db.querySelector(".db-res");
+  const dbGrid = db.querySelector(".db-grid");
+  const dbEditNote = db.querySelector(".db-edit-note");
+  const dbAsk = db.querySelector(".db-ask");
+  const dbAskText = db.querySelector(".db-ask-text");
+  const dbGen = db.querySelector(".db-gen");
+  const dbAiBtn = db.querySelector(".db-ai-btn");
+  const DB_TREE = [
+    { name: "public", kind: "schema", depth: 0 },
+    { name: "customers", kind: "table", depth: 1 },
+    { name: "orders", kind: "table", depth: 1, open: true },
+    { name: "id", kind: "col", detail: "integer PK", depth: 2 },
+    { name: "customer", kind: "col", detail: "text", depth: 2 },
+    { name: "total", kind: "col", detail: "numeric", depth: 2 },
+    { name: "status", kind: "col", detail: "text", depth: 2 },
+    { name: "payments", kind: "table", depth: 1 },
+  ];
+  const DB_COLS = ["id", "customer", "total", "status"];
+  const DB_ROWS = [
+    ["1042", "Ada Lovelace", "1 980.00", "paid"],
+    ["1043", "Linus T.", "1 455.50", "paid"],
+    ["1051", "Grace H.", "1 210.00", "paid"],
+    ["1077", "Ken T.", "980.40", "paid"],
+    ["1080", "Barbara L.", "912.00", "paid"],
+  ];
+  const DB_QUERY_HEAD = "SELECT id, ";
+  const DB_QUERY_TAIL = ", total, status\nFROM orders\nWHERE status = 'paid'\nORDER BY total DESC;";
+  const DB_AI_ASK = "top customers, last 30 days";
+  const DB_AI_SQL = "SELECT customer, sum(total) AS spent\nFROM orders\nWHERE created_at > now() - interval '30 days'\nGROUP BY customer\nORDER BY spent DESC;";
+
+  function buildDbTree() {
+    dbTree.textContent = "";
+    for (const n of DB_TREE) {
+      const row = document.createElement("div");
+      row.className = `db-node db-${n.kind}`;
+      row.style.setProperty("--d", String(n.depth));
+      row.innerHTML = `<span>${escapeHtml(n.name)}</span>${n.detail ? `<em>${escapeHtml(n.detail)}</em>` : ""}`;
+      dbTree.appendChild(row);
+    }
+  }
+
+  function dbGridRows(rows, cols = DB_COLS) {
+    dbGrid.textContent = "";
+    dbGrid.style.setProperty("--cols", String(cols.length));
+    const head = document.createElement("div");
+    head.className = "db-row db-head";
+    head.innerHTML = `<span>#</span>${cols.map((c) => `<span>${escapeHtml(c)}</span>`).join("")}`;
+    dbGrid.appendChild(head);
+    return rows.map((r, i) => {
+      const row = document.createElement("div");
+      row.className = "db-row";
+      row.innerHTML = `<span>${i + 1}</span>${r.map((v) => `<span>${escapeHtml(v)}</span>`).join("")}`;
+      dbGrid.appendChild(row);
+      return row;
+    });
+  }
+
+  function dbReset() {
+    buildDbTree();
+    dbSql.textContent = "";
+    dbSql.classList.remove("is-selected");
+    dbComplete.classList.remove("is-on");
+    dbWait.classList.remove("is-on");
+    dbRes.classList.remove("is-on");
+    dbEditNote.textContent = "";
+    dbAsk.classList.remove("is-on");
+    dbAskText.textContent = "";
+    dbAiBtn.classList.remove("is-on");
+    dbRun.classList.remove("is-press", "is-cancel");
+    dbRun.innerHTML = "Run <kbd>Ctrl ↵</kbd>";
+  }
+
+  async function dbRunQuery(t, rows, cols) {
+    dbRun.classList.add("is-press");
+    await sleep(220, t);
+    dbRun.classList.remove("is-press");
+    dbRun.classList.add("is-cancel");
+    dbRun.textContent = "Cancel";
+    dbRes.classList.remove("is-on");
+    dbWait.classList.add("is-on");
+    for (const s of ["0.2", "0.6", "1.1"]) {
+      dbWaitText.textContent = `Running… ${s} s`;
+      await sleep(330, t);
+    }
+    dbWait.classList.remove("is-on");
+    dbRun.classList.remove("is-cancel");
+    dbRun.innerHTML = "Run <kbd>Ctrl ↵</kbd>";
+    const out = dbGridRows(rows, cols);
+    dbRes.classList.add("is-on");
+    await reveal(out, t, 90);
+    return out;
+  }
+
+  async function dbQueryScene(t) {
+    dbReset();
+    await sleep(500, t);
+    const [, , orders] = [...dbTree.children];
+    orders.classList.add("is-hover");
+    await sleep(500, t);
+    orders.classList.remove("is-hover");
+    dbSql.classList.add("cur");
+    await typeInto(dbSql, DB_QUERY_HEAD + "cus", t, 45);
+    dbComplete.innerHTML = '<span class="is-sel"><b>cus</b>tomer <em>text</em></span><span><b>CU</b>RSOR</span><span><b>CU</b>RRENT_DATE</span>';
+    dbComplete.classList.add("is-on");
+    await sleep(900, t);
+    dbComplete.classList.remove("is-on");
+    dbSql.textContent = DB_QUERY_HEAD + "customer";
+    await sleep(250, t);
+    await typeInto(dbSql, DB_QUERY_TAIL, t, 26);
+    dbSql.classList.remove("cur");
+    await sleep(400, t);
+    const rows = await dbRunQuery(t, DB_ROWS);
+    await sleep(900, t);
+    // Edit a cell, then save in one transaction.
+    const cell = rows[1].children[4];
+    cell.classList.add("is-editing");
+    await sleep(500, t);
+    cell.textContent = "refunded";
+    cell.classList.remove("is-editing");
+    cell.classList.add("is-edited");
+    dbEditNote.textContent = "1 change · Save…";
+    await sleep(1100, t);
+    dbEditNote.textContent = "UPDATE … WHERE id = 1043";
+    await sleep(1600, t);
+    cell.classList.remove("is-edited");
+    dbEditNote.textContent = "Saved · 1 row, one transaction";
+    await sleep(1600, t);
+  }
+
+  async function dbAiScene(t) {
+    dbReset();
+    await sleep(400, t);
+    dbAiBtn.classList.add("is-on");
+    dbAsk.classList.add("is-on");
+    await sleep(300, t);
+    dbAskText.classList.add("cur");
+    await typeInto(dbAskText, DB_AI_ASK, t, 40);
+    dbAskText.classList.remove("cur");
+    dbGen.classList.add("is-press");
+    await sleep(240, t);
+    dbGen.classList.remove("is-press");
+    await sleep(500, t);
+    dbSql.textContent = DB_AI_SQL;
+    dbSql.classList.add("is-selected");
+    await sleep(1200, t);
+    dbSql.classList.remove("is-selected");
+    await dbRunQuery(t, [["Ada Lovelace", "4 120.00"], ["Grace H.", "3 905.50"], ["Linus T.", "2 760.00"]], ["customer", "spent"]);
+    await sleep(2600, t);
+  }
+
+  async function dbLoop(t) {
+    for (;;) {
+      await dbQueryScene(t);
+      await dbAiScene(t);
+    }
+  }
+
+  function dbStill() {
+    dbReset();
+    dbSql.textContent = DB_QUERY_HEAD + "customer" + DB_QUERY_TAIL;
+    dbGridRows(DB_ROWS).forEach((r) => r.classList.add("is-on"));
+    dbRes.classList.add("is-on");
+  }
+
   const aiView = views.ai;
   const aiTyped = aiView?.querySelector(".ai-typed");
   const aiGhost = aiView?.querySelector(".ai-ghost");
@@ -471,6 +664,11 @@ loadLatest();
       typed: "doc",
       ghost: "ker ps -a",
       explain: "Lists all containers\n(running and stopped).",
+    },
+    {
+      typed: "systemctl restart nginx",
+      ghost: "",
+      explain: "Job failed: port 80 is already in use.\nCheck with: sudo ss -ltnp | grep :80",
     },
     {
       typed: "git stash",
@@ -538,8 +736,8 @@ loadLatest();
     aiPanelBody.textContent = "Lists all containers\n(running and stopped).";
   }
 
-  const loops = { terminal: terminalLoop, api: apiLoop, json: jsonLoop, ai: aiLoop };
-  const stills = { terminal: terminalStill, api: apiStill, json: jsonStill, ai: aiStill };
+  const loops = { terminal: terminalLoop, api: apiLoop, db: dbLoop, json: jsonLoop, ai: aiLoop };
+  const stills = { terminal: terminalStill, api: apiStill, db: dbStill, json: jsonStill, ai: aiStill };
 
   function activate(name) {
     if (active === name) return;

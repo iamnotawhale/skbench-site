@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>skhub — SSH and API workbench for Linux</title>
+    <title>skhub — SSH, API and database workbench for Linux</title>
     <meta
       name="description"
-      content="skhub is a Linux workbench: SSH client with terminal autocomplete, SFTP and encrypted sync, a full API client with collections, scripts and OAuth 2.0, a JSON and XML formatter with logical compare, and an AI assistant for terminal errors, API body generation and diff explanation. Download the latest .deb."
+      content="skhub is a Linux workbench: SSH client with terminal autocomplete, SFTP and encrypted sync, a full API client with collections, scripts and OAuth 2.0, a database client for PostgreSQL, MySQL, SQLite and Redis with paging, editing and SQL from plain language, a JSON and XML formatter with logical compare, and an AI assistant for terminal errors, API body generation and diff explanation. Download the latest .deb."
     />
     <meta name="theme-color" content="#07090d" />
     <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
@@ -74,7 +74,32 @@
             <div class="api-url"><b class="api-method">POST</b><span class="api-path"></span><em class="api-send">Send</em></div>
             <pre class="api-req"></pre>
             <div class="api-status"></div>
-            <pre class="api-res"></pre>
+            <div class="api-res-box">
+              <pre class="api-res"></pre>
+              <em class="api-filter" title="JSONPath filter">$</em>
+              <div class="api-jp"><span class="api-jp-label">JSONPath</span><span class="api-jp-text"></span><span class="api-jp-count"></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="demo-view" data-view="db">
+        <header class="demo-bar"><i></i><i></i><i></i><span>Databases</span></header>
+        <div class="demo-body db">
+          <div class="db-side">
+            <div class="db-conn"><b class="db-dot"></b><span>orders</span><em>PG · via web-1</em></div>
+            <div class="db-tree"></div>
+          </div>
+          <div class="db-main">
+            <div class="db-ask"><span class="db-spark">✦</span><span class="db-ask-text"></span><em class="db-gen">Generate</em></div>
+            <div class="db-bar"><span class="db-server">PostgreSQL 16.4</span><em class="db-ai-btn">✦ AI</em><em class="db-run">Run <kbd>Ctrl ↵</kbd></em></div>
+            <div class="db-editor"><pre class="db-sql"></pre><div class="db-complete"></div></div>
+            <div class="db-out">
+              <div class="db-wait"><i class="db-spin"></i><span class="db-wait-text">Running… 0.4 s</span></div>
+              <div class="db-res">
+                <div class="db-pager"><span>‹</span><span class="db-range">Rows 1–500 of 12 840</span><span>›</span><span class="db-edit-note"></span></div>
+                <div class="db-grid"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -115,9 +140,9 @@
           <span class="prompt-host">skhub</span
           ><span class="caret" aria-hidden="true"></span>
         </p>
-        <h1>SSH and API workbench for Linux</h1>
+        <h1>SSH, API and database workbench for Linux</h1>
         <p class="lede">
-          Terminals, hosts and SFTP next to a full API client and AI assistant —<br />
+          Terminals, hosts and SFTP next to a full API client, a database client and an AI assistant —<br />
           one encrypted workspace on your machine,<br />
           with optional end-to-end sync between devices.
         </p>
@@ -142,40 +167,46 @@
         <article class="pillar" tabindex="0" data-demo="terminal">
           <h2>Terminal and SSH</h2>
           <ul>
-            <li>Hosts, groups and credentials in an encrypted catalog</li>
-            <li>Split panes, local terminal, quick connect and snippets</li>
-            <li>Command autocomplete with ghost text — Tab or → to accept</li>
-            <li>SFTP browser and port forwarding</li>
-            <li>Optional end-to-end encrypted sync between machines</li>
+            <li>Encrypted catalog of hosts and keys</li>
+            <li>Split panes, snippets, autocomplete</li>
+            <li>SFTP and port forwarding</li>
+            <li>End-to-end encrypted sync</li>
           </ul>
         </article>
         <article class="pillar" tabindex="0" data-demo="api">
           <h2>API client</h2>
           <ul>
-            <li>REST and GraphQL requests, multipart uploads, OAuth 2.0</li>
-            <li>Collections and folders that share headers, auth, variables and scripts</li>
-            <li>Environments, dynamic variables, JavaScript scripts and assertions</li>
-            <li>JSONPath filter, search, code generation for many languages</li>
-            <li>Import from Bruno, Postman and OpenAPI, export to Bruno files</li>
+            <li>REST, GraphQL, OAuth 2.0</li>
+            <li>Collections, environments, scripts</li>
+            <li>JSONPath filter and code generation</li>
+            <li>Import from Bruno, Postman, OpenAPI</li>
+          </ul>
+        </article>
+        <article class="pillar" tabindex="0" data-demo="db">
+          <h2>Databases</h2>
+          <ul>
+            <li>PostgreSQL, MySQL, SQLite, Redis</li>
+            <li>Direct or through an SSH host</li>
+            <li>Paged results, cancel, edit rows</li>
+            <li>SQL completion and AI queries</li>
           </ul>
         </article>
         <article class="pillar" tabindex="0" data-demo="json">
           <h2>JSON and XML</h2>
           <ul>
-            <li>Beautify, minify and sort keys, with the exact line and column of a syntax error</li>
-            <li>Compare two documents logically: key order, attribute order and whitespace do not count</li>
-            <li>Differences highlighted in both texts and listed with their paths</li>
-            <li>Copy a node, a property or its path from a context menu; nothing is written to disk</li>
+            <li>Beautify, minify, sort keys</li>
+            <li>Logical compare, order ignored</li>
+            <li>Differences listed with paths</li>
+            <li>JSONPath filter with history</li>
           </ul>
         </article>
         <article class="pillar" tabindex="0" data-demo="ai">
           <h2>AI assistant</h2>
           <ul>
-            <li>Terminal command autocomplete from history and a built-in command set</li>
-            <li>Explain a terminal error: select text, right-click, Explain with AI</li>
-            <li>Generate API request body from a description with one click</li>
-            <li>Explain diff results in the JSON / XML compare view</li>
-            <li>Works with the built-in proxy, OpenAI-compatible APIs or local Ollama</li>
+            <li>Command autocomplete in the terminal</li>
+            <li>Explains errors, schemas and diffs</li>
+            <li>Writes request bodies and SQL</li>
+            <li>Built-in, OpenAI-compatible or Ollama</li>
           </ul>
         </article>
       </section>
